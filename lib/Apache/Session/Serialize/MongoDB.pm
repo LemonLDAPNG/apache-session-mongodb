@@ -18,7 +18,7 @@ __END__
 
 =head1 NAME
 
-Apache::Session::Serialize::MongoDB - Do nothing since MongoDB can store Perl
+Apache::Session::Serialize::MongoDB - Does nothing since MongoDB can store Perl
 objects;
 
 =head1 SYNOPSIS
