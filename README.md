@@ -29,7 +29,7 @@ Xavier Guimard, <x.guimard@free.fr>
 
 ##COPYRIGHT AND LICENSE
 
-Copyright ©2015 by Xavier Guimard, <x.guimard@free.fr>
+Copyright &copy;2015 by Xavier Guimard, <x.guimard@free.fr>
 
 
 This library is free software; you can redistribute it and/or modify it

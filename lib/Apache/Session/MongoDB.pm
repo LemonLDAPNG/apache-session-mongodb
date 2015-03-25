@@ -66,11 +66,11 @@ L<Apache::Session>
 
 =head1 AUTHOR
 
-Xavier Guimard, E<lt>x.guimard@free.fr<gt>
+Xavier Guimard, E<lt>x.guimard@free.frE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2015 by Xavier Guimard, E<lt>x.guimard@free.fr<gt>
+Copyright (C) 2015 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.10.0 or,
