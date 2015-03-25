@@ -3,7 +3,7 @@ package Apache::Session::Serialize::MongoDB;
 use 5.010;
 use strict;
 
-our $VERSION = '0.01';
+our $VERSION = '0.1.1';
 
 sub serialize {
     my $session = shift;

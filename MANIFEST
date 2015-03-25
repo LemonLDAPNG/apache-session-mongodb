@@ -1,6 +1,9 @@
 Changes
+lib/Apache/Session/MongoDB.pm
+lib/Apache/Session/Serialize/MongoDB.pm
+lib/Apache/Session/Store/MongoDB.pm
 Makefile.PL
 MANIFEST
 README
+README.md
 t/Apache-Session-MongoDB.t
-lib/Apache/Session/MongoDB.pm

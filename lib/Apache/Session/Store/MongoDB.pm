@@ -3,7 +3,7 @@ package Apache::Session::Store::MongoDB;
 use 5.010;
 use strict;
 
-our $VERSION = '0.01';
+our $VERSION = '0.1.1';
 
 use MongoDB;
 

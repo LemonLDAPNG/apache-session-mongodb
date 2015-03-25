@@ -3,7 +3,7 @@ package Apache::Session::MongoDB;
 use 5.010;
 use strict;
 
-our $VERSION = '0.1';
+our $VERSION = '0.1.1';
 our @ISA     = qw(Apache::Session);
 
 use Apache::Session;
@@ -16,7 +16,7 @@ sub populate {
     my $self = shift;
 
     $self->{object_store} = Apache::Session::Store::MongoDB->new($self);
-    $self->{lock_manager} = new Apache::Session::Lock::Null $self;
+    $self->{lock_manager} = Apache::Session::Lock::Null->new($self);
     $self->{generate}     = \&Apache::Session::Generate::MD5::generate;
     $self->{validate}     = \&Apache::Session::Generate::MD5::validate;
     $self->{serialize}    = \&Apache::Session::Serialize::MongoDB::serialize;
@@ -24,7 +24,22 @@ sub populate {
 }
 
 1;
+
 __END__
+# TODO:
+sub searchOn {
+    my ( $class, $args, $selectField, $value, @fields ) = splice @_;
+}
+
+sub searchOnExpr {
+    my ( $class, $args, $selectField, $value, @fields ) = splice @_;
+}
+
+sub get_key_from_all_sessions {
+    my ( $class, $args, $data ) = splice @_;
+}
+
+1;
 
 =head1 NAME
 
