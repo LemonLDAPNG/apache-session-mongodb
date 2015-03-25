@@ -20,7 +20,7 @@ BEGIN { use_ok('Apache::Session::MongoDB') }
 SKIP: {
 
     unless ( defined $ENV{MONGODB_SERVER} ) {
-        skip 'MONGODB_SERVER is not set', 4 unless ( $ENV{MONGODB_SERVER} );
+        skip 'MONGODB_SERVER is not set', 5 unless ( $ENV{MONGODB_SERVER} );
     }
     my %h;
 
