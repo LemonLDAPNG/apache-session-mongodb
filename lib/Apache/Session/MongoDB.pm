@@ -3,7 +3,7 @@ package Apache::Session::MongoDB;
 use 5.010;
 use strict;
 
-our $VERSION = '0.01';
+our $VERSION = '0.1';
 our @ISA     = qw(Apache::Session);
 
 use Apache::Session;
