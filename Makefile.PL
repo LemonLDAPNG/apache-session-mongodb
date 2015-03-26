@@ -6,7 +6,10 @@ use ExtUtils::MakeMaker;
 WriteMakefile(
     NAME         => 'Apache::Session::MongoDB',
     VERSION_FROM => 'lib/Apache/Session/MongoDB.pm',
-    PREREQ_PM    => { MongoDB => 0 },
+    PREREQ_PM    => {
+        'Apache::Session' => '1.80',
+        MongoDB           => 0,
+    },
     (
         $] >= 5.005
         ? (

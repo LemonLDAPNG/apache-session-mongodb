@@ -4,5 +4,9 @@ Revision history for Perl extension Apache::Session::MongoDB.
 	- original version; created by h2xs 1.23 with options
 	-AXn Apache::Session::MongoDB
 
-0.1.1  Wed Mar 25 21:15:12 2015
+0.11  Wed Mar 25 21:15:12 2015
 	- missing files in manifest
+
+0.12  Thu Mar 26 18:29:43 2015
+	- missing dependency (Apache::Session)
+
