@@ -10,3 +10,5 @@ Revision history for Perl extension Apache::Session::MongoDB.
 0.12  Thu Mar 26 18:29:43 2015
 	- missing dependency (Apache::Session)
 
+0.13  Sat Dec 19 09:58:45 2015
+	- update MongoDB::Client args

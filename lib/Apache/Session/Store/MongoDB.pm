@@ -3,7 +3,7 @@ package Apache::Session::Store::MongoDB;
 use 5.010;
 use strict;
 
-our $VERSION = '0.12';
+our $VERSION = '0.13';
 
 use MongoDB;
 
@@ -24,11 +24,12 @@ sub connection {
     return
       if ( defined $self->{collection} );
     my $conn_args;
-    foreach my $w (qw(host username password ssl admin_db)) {
-        my $t = $w;
-        $t =~ s/^db_name$/admin_db/;
-        $conn_args->{$t} = $session->{args}->{$t} || $default->{$t};
-        delete $conn_args->{$t} unless ( defined $conn_args->{$t} );
+    foreach my $w (
+        qw(host auth_mechanism auth_mechanism_properties connect_timeout_ms db_name port ssl username password)
+      )
+    {
+        $conn_args->{$w} = $session->{args}->{$w} || $default->{$w};
+        delete $conn_args->{$w} unless ( defined $conn_args->{$w} );
     }
     my $s = MongoDB::MongoClient->new($conn_args)
       or die('Unable to connect to MongoDB server');
@@ -89,9 +90,9 @@ Apache::Session::MongoDB - An implementation of Apache::Session
  tie %hash, 'Apache::Session::MongoDB', $id, {
     Host     => 'locahost:27017',
     database => 'sessions',
-    # Set here any MongoDB::new() arg
+    # Set here any MongoDB::Client new() arg
     # Note that :
-    #  - 'db_name' is called 'admin_db' to avoid confusion with 'database'
+    #  - 'db_name' is the admin database name
     #  - 'database' is set by default to 'sessions'
  };
 
