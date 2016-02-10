@@ -2,6 +2,7 @@ package Apache::Session::MongoDB;
 
 use 5.010;
 use strict;
+use AutoLoader 'AUTOLOAD';
 
 our $VERSION = '0.15';
 our @ISA     = qw(Apache::Session);
@@ -31,7 +32,7 @@ our $default;
 
 1;
 
-#__END__
+__END__
 sub searchOn {
     my ( $class, $args, $selectField, $value, @fields ) = @_;
     return $class->_query( $args, { $selectField => $value }, @fields );
@@ -41,8 +42,7 @@ sub searchOnExpr {
     my ( $class, $args, $selectField, $value, @fields ) = @_;
     $value =~ s/([\/\\\^\$\.\?\+\[\]\{\}\(\)])/\\$1/g;
     $value =~ s/\*/\.\*/g;
-    return $class->_query( $args,
-        { $selectField => { '$regex' => "/$value/o" } } );
+    return $class->_query( $args, { $selectField => qr/$value/i } );
 }
 
 sub _query {
