@@ -3,7 +3,7 @@ package Apache::Session::Serialize::MongoDB;
 use 5.010;
 use strict;
 
-our $VERSION = '0.13';
+our $VERSION = '0.14';
 
 sub serialize {
     my $session = shift;
@@ -25,10 +25,7 @@ objects;
 
  use Apache::Session::MongoDB;
  
- tie %hash, 'Apache::Session::MongoDB', $id, {
-    Host => 'locahost',
-    Port => 27017
- };
+ tie %hash, 'Apache::Session::MongoDB', $id, {};
 
 =head1 DESCRIPTION
 
@@ -36,7 +33,7 @@ This module does nothing.
 
 =head1 SEE ALSO
 
-L<Apache::Session::Store::MongoDB>
+L<Apache::Session::MongoDB>
 
 =head1 AUTHOR
 
