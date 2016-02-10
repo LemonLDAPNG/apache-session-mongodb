@@ -45,6 +45,7 @@ SKIP: {
 
     ok( $h2{some} eq 'data',     'Find data' );
     ok( $h2{utf8} eq 'éàèœ', 'UTF string' );
+    Apache::Session::MongoDB->get_key_from_all_sessions($args);
 
     #binmode(STDERR, ":utf8");
     #print STDERR $h2{utf8}."\n";
@@ -53,7 +54,7 @@ SKIP: {
 
     unless ( defined $ENV{MONGODB_USER} and defined $ENV{MONGODB_DB_NAME} ) {
 
-        skip 'MONGODB_USER and MONGODB_DB_NAME are not set', 1;
+        skip 'MONGODB_USER and MONGODB_DB_NAME are not set', 2;
     }
     for my $w (qw(db_name username password)) {
         $args->{$w} = $ENV{ "MONGODB_" . uc($w) };

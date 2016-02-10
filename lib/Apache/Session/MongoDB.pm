@@ -25,12 +25,18 @@ sub populate {
     return $self;
 }
 
+our $default;
+
+*default = \$Apache::Session::Store::MongoDB::default;
+
 1;
 
-__END__
+#__END__
 # TODO:
 sub searchOn {
     my ( $class, $args, $selectField, $value, @fields ) = splice @_;
+    my $col = $class->_col($args);
+    my $res = $col->find( { $selectField => $value } );
 }
 
 sub searchOnExpr {
@@ -39,6 +45,29 @@ sub searchOnExpr {
 
 sub get_key_from_all_sessions {
     my ( $class, $args, $data ) = splice @_;
+    my $col = $class->_col($args);
+    my $cursor = $col->find( {} );
+    while ( my $res = $cursor->next ) {
+        print STDERR Dumper($res);
+        use Data::Dumper;
+    }
+}
+
+sub _col {
+    my ( $self, $args ) = @_;
+    my $conn_args;
+    foreach my $w (
+        qw(auth_mechanism auth_mechanism_properties connect_timeout_ms ssl username password)
+      )
+    {
+        $conn_args->{$w} = $args->{$w} || $default->{$w};
+        delete $conn_args->{$w} unless ( defined $conn_args->{$w} );
+    }
+    my $s = MongoDB->connect( $args->{host} || $default->{host}, $conn_args )
+      or die('Unable to connect to MongoDB server');
+    return $s->get_database( $args->{db_name} || $default->{db_name} )
+      ->get_collection( $args->{collection}   || $default->{collection} );
+
 }
 
 1;
