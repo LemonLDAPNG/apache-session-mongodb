@@ -3,7 +3,7 @@ package Apache::Session::MongoDB;
 use 5.010;
 use strict;
 
-our $VERSION = '0.14';
+our $VERSION = '0.15';
 our @ISA     = qw(Apache::Session);
 
 use Apache::Session;
@@ -32,25 +32,57 @@ our $default;
 1;
 
 #__END__
-# TODO:
 sub searchOn {
-    my ( $class, $args, $selectField, $value, @fields ) = splice @_;
-    my $col = $class->_col($args);
-    my $res = $col->find( { $selectField => $value } );
+    my ( $class, $args, $selectField, $value, @fields ) = @_;
+    return $class->_query( $args, { $selectField => $value }, @fields );
 }
 
 sub searchOnExpr {
-    my ( $class, $args, $selectField, $value, @fields ) = splice @_;
+    my ( $class, $args, $selectField, $value, @fields ) = @_;
+    $value =~ s/([\/\\\^\$\.\?\+\[\]\{\}\(\)])/\\$1/g;
+    $value =~ s/\*/\.\*/g;
+    return $class->_query( $args,
+        { $selectField => { '$regex' => "/$value/o" } } );
+}
+
+sub _query {
+    my ( $class, $args, $filter, @fields ) = @_;
+    my $col    = $class->_col($args);
+    my $cursor = $col->find($filter);
+    my $res;
+    while ( my $r = $cursor->next ) {
+        my $id = $r->{_session_id};
+        delete $r->{_id};
+        if (@fields) {
+            $res->{$id}->{$_} = $r->{$_} foreach (@fields);
+        }
+        else {
+            $res->{$id} = $r;
+        }
+    }
+    return $res;
 }
 
 sub get_key_from_all_sessions {
-    my ( $class, $args, $data ) = splice @_;
+    my ( $class, $args, $data ) = @_;
     my $col = $class->_col($args);
     my $cursor = $col->find( {} );
-    while ( my $res = $cursor->next ) {
-        print STDERR Dumper($res);
-        use Data::Dumper;
+    my $res;
+    while ( my $r = $cursor->next ) {
+        my $id = $r->{_session_id};
+        delete $r->{_id};
+        if ( ref($data) eq 'CODE' ) {
+            $res->{$id} = $data->( $r, $id );
+        }
+        elsif ($data) {
+            $data = [$data] unless ( ref $data );
+            $res->{$id}->{$_} = $r->{$_} foreach (@$data);
+        }
+        else {
+            $res->{$id} = $r;
+        }
     }
+    return $res;
 }
 
 sub _col {
