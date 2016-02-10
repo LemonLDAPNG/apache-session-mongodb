@@ -51,20 +51,30 @@ Apache::Session::MongoDB - An implementation of Apache::Session
 
  use Apache::Session::MongoDB;
  
+ # Using localhost server
+ tie %hash, 'Apache::Session::MongoDB', $id, {};
+  
+ # Example with default values
  tie %hash, 'Apache::Session::MongoDB', $id, {
-    Host => 'locahost',
-    Port => 27017
+    host       => 'locahost:27017',
+    db_name    => 'sessions',
+    collection => 'sessions',
  };
 
 =head1 DESCRIPTION
 
 This module is an implementation of Apache::Session.  It uses the MongoDB
-backing store and no locking.  See the example, and the documentation for
-Apache::Session::Store::MongoDB for more details.
+backing store and no locking.
+
+=head1 PARAMETERS
+
+You can set the followong parameters host, db_name, collection, auth_mechanism,
+auth_mechanism_properties, connect_timeout_ms, ssl, username and password.
+See L<MongoDB> for more
 
 =head1 SEE ALSO
 
-L<Apache::Session>
+L<MongoDB>, L<Apache::Session>
 
 =head1 AUTHOR
 
