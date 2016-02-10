@@ -21,6 +21,8 @@ sub populate {
     $self->{validate}     = \&Apache::Session::Generate::MD5::validate;
     $self->{serialize}    = \&Apache::Session::Serialize::MongoDB::serialize;
     $self->{unserialize}  = \&Apache::Session::Serialize::MongoDB::unserialize;
+
+    return $self;
 }
 
 1;
