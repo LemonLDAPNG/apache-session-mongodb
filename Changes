@@ -12,3 +12,10 @@ Revision history for Perl extension Apache::Session::MongoDB.
 
 0.13  Sat Dec 19 09:58:45 2015
 	- update MongoDB::Client args
+
+0.14  Wed Feb 10 12:44:26 2016
+	- module wasn't usable by Lemonldap::NG
+	- change parameters
+
+0.15  Wed Feb 10 15:41:34 2016
+	- class methods to browse sessions
