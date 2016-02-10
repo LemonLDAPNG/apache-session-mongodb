@@ -9,7 +9,7 @@ use MongoDB;
 
 our $default = {
     host       => 'localhost:27017',
-    database   => 'sessions',
+    db_name    => 'sessions',
     collection => 'sessions',
 };
 
@@ -25,16 +25,18 @@ sub connection {
       if ( defined $self->{collection} );
     my $conn_args;
     foreach my $w (
-        qw(host auth_mechanism auth_mechanism_properties connect_timeout_ms db_name port ssl username password)
+        qw(auth_mechanism auth_mechanism_properties connect_timeout_ms ssl username password)
       )
     {
         $conn_args->{$w} = $session->{args}->{$w} || $default->{$w};
         delete $conn_args->{$w} unless ( defined $conn_args->{$w} );
     }
-    my $s = MongoDB::MongoClient->new($conn_args)
+    my $s =
+      MongoDB->connect( $session->{args}->{host} || $default->{host},
+        $conn_args )
       or die('Unable to connect to MongoDB server');
     $self->{collection} =
-      $s->get_database( $session->{args}->{database} || $default->{database} )
+      $s->get_database( $session->{args}->{db_name} || $default->{db_name} )
       ->get_collection( $session->{args}->{collection}
           || $default->{collection} );
 }
@@ -82,29 +84,25 @@ Apache::Session::MongoDB - An implementation of Apache::Session
 =head1 SYNOPSIS
 
  use Apache::Session::MondoDB;
-
+ 
  # Using localhost server
  tie %hash, 'Apache::Session::MongoDB', $id, {};
- 
- # More args:
+  
+ # Example with default values
  tie %hash, 'Apache::Session::MongoDB', $id, {
-    Host     => 'locahost:27017',
-    database => 'sessions',
-    # Set here any MongoDB::Client new() arg
-    # Note that :
-    #  - 'db_name' is the admin database name
-    #  - 'database' is set by default to 'sessions'
+    host       => 'locahost:27017',
+    db_name    => 'sessions',
+    collection => 'sessions',
  };
 
 =head1 DESCRIPTION
 
 This module is an implementation of Apache::Session. It uses the MongoDB
-backing store and no locking. See the example, and the documentation for
-Apache::Session::Store::MongoDB for more details.
+backing store and no locking.
 
 =head1 SEE ALSO
 
-L<Apache::Session>
+L<Apache::Session::MongoDB>, L<Apache::Session>
 
 =head1 AUTHOR
 
