@@ -19,3 +19,6 @@ Revision history for Perl extension Apache::Session::MongoDB.
 
 0.15  Wed Feb 10 15:41:34 2016
 	- class methods to browse sessions
+
+0.16  Fri Apr 1 12:50:23 2016
+	- Add more MongoDB parameters
