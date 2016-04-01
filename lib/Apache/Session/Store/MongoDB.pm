@@ -25,7 +25,12 @@ sub connection {
       if ( defined $self->{collection} );
     my $conn_args;
     foreach my $w (
-        qw(host auth_mechanism auth_mechanism_properties bson_codec connect_timeout_ms db_name heartbeat_frequency_ms j local_threshold_ms max_time_ms password port read_pref_mode read_pref_tag_sets replica_set_name server_selection_timeout_ms server_selection_try_once socket_check_interval_ms socket_timeout_ms ssl username w wtimeout read_concern_level)
+        qw(host auth_mechanism auth_mechanism_properties bson_codec
+        connect_timeout_ms db_name heartbeat_frequency_ms j local_threshold_ms
+        max_time_ms password port read_pref_mode read_pref_tag_sets
+        replica_set_name server_selection_timeout_ms server_selection_try_once
+        socket_check_interval_ms socket_timeout_ms ssl username w wtimeout
+        read_concern_level)
       )
     {
         $conn_args->{$w} = $session->{args}->{$w} || $default->{$w};
