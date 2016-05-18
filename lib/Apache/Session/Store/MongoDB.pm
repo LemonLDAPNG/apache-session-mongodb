@@ -3,7 +3,7 @@ package Apache::Session::Store::MongoDB;
 use 5.010;
 use strict;
 
-our $VERSION = '0.16';
+our $VERSION = '0.17';
 
 use MongoDB;
 
@@ -65,7 +65,12 @@ sub materialize {
     $self->connection($session);
     $session->{data} = $self->{collection}
       ->find_one( { _id => $session->{data}->{_session_id} } );
-    $session->{data}->{_session_id} = $session->{data}->{_id};
+    if ( $session->{data}->{_session_id} ) {
+        $session->{data}->{_session_id} = $session->{data}->{_id};
+    }
+    else {
+        $session->data = undef;
+    }
 }
 
 sub remove {
