@@ -1,5 +1,7 @@
 # Apache::Session::MongoDB
 
+[![Build Status](https://travis-ci.org/LemonLDAPNG/apache-session-mongodb.svg?branch=master)](https://travis-ci.org/LemonLDAPNG/apache-session-mongodb)
+
 ## NAME
 
 Apache::Session::MongoDB - An implementation of Apache::Session
