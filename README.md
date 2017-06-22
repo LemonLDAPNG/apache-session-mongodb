@@ -29,7 +29,7 @@ Apache::Session::Store::MongoDB for more details.
 
 Xavier Guimard, <x.guimard@free.fr>
 
-##COPYRIGHT AND LICENSE
+## COPYRIGHT AND LICENSE
 
 Copyright &copy;2015-2016 by Xavier Guimard, <x.guimard@free.fr>
 
