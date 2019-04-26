@@ -28,3 +28,6 @@ Revision history for Perl extension Apache::Session::MongoDB.
 
 0.18  Thu Jun 22 12:00:00 2017
     -  Substitute $ and . characters in keys before stroring session contents 
+
+0.19  Thu Apr 26 08:36:07 2019
+    - Replace deprecated MongoDB function (insert => insert_one, remove => delete_one)
