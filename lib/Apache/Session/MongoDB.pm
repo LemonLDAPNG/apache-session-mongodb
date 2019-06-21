@@ -33,6 +33,7 @@ our $default;
 1;
 
 __END__
+
 sub searchOn {
     my ( $class, $args, $selectField, $value, @fields ) = @_;
     return $class->_query( $args, { $selectField => $value }, @fields );
@@ -49,16 +50,15 @@ sub _query {
     my ( $class, $args, $filter, @fields ) = @_;
     my $col    = $class->_col($args);
     my $cursor = $col->find($filter);
+    if (@fields) {
+        $cursor =
+          $cursor->fields( { map { $_ => 1 } @fields, "_session_id" => 1 } );
+    }
     my $res;
     while ( my $r = $cursor->next ) {
         my $id = $r->{_session_id};
         delete $r->{_id};
-        if (@fields) {
-            $res->{$id}->{$_} = $r->{$_} foreach (@fields);
-        }
-        else {
-            $res->{$id} = $r;
-        }
+        $res->{$id} = $r;
     }
     return $res;
 }
