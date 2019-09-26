@@ -54,35 +54,35 @@ sub _query {
         $cursor =
           $cursor->fields( { map { $_ => 1 } @fields, "_session_id" => 1 } );
     }
-    my $res;
+    my %res;
     while ( my $r = $cursor->next ) {
         my $id = $r->{_session_id};
         delete $r->{_id};
-        $res->{$id} = $r;
+        $res{$id} = $r;
     }
-    return $res;
+    return \%res;
 }
 
 sub get_key_from_all_sessions {
     my ( $class, $args, $data ) = @_;
-    my $col = $class->_col($args);
+    my $col    = $class->_col($args);
     my $cursor = $col->find( {} );
-    my $res;
+    my %res;
     while ( my $r = $cursor->next ) {
         my $id = $r->{_session_id};
         delete $r->{_id};
         if ( ref($data) eq 'CODE' ) {
-            $res->{$id} = $data->( $r, $id );
+            $res{$id} = $data->( $r, $id );
         }
         elsif ($data) {
             $data = [$data] unless ( ref $data );
-            $res->{$id}->{$_} = $r->{$_} foreach (@$data);
+            $res{$id}->{$_} = $r->{$_} foreach (@$data);
         }
         else {
-            $res->{$id} = $r;
+            $res{$id} = $r;
         }
     }
-    return $res;
+    return \%res;
 }
 
 sub _col {
