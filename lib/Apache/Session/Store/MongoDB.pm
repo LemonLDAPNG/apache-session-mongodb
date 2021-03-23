@@ -69,7 +69,7 @@ sub materialize {
         $session->{data}->{_session_id} = $session->{data}->{_id};
     }
     else {
-        $session->data = undef;
+        die "Object does not exist in the data store";
     }
 }
 
