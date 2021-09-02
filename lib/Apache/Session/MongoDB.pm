@@ -4,7 +4,7 @@ use 5.010;
 use strict;
 use AutoLoader 'AUTOLOAD';
 
-our $VERSION = '0.22';
+our $VERSION = '0.23';
 our @ISA     = qw(Apache::Session);
 
 use Apache::Session;
